@@ -81,3 +81,44 @@ for row in df.to_dict(orient="records"):
 
 print("Summary Results Table:")
 print(df_new)
+
+
+# Add results to database
+connection = sqlite3.connect("cell-count.db")
+cursor = connection.cursor()
+
+
+
+
+table_creation = [
+    """CREATE TABLE IF NOT EXISTS Summary (
+    id INTEGER PRIMARY KEY, 
+    sample text NOT NULL, 
+    total_count INTEGER NOT NULL,
+    population text NOT NULL,
+    count INTEGER NOT NULL,
+    percentage REAL NOT NULL,
+    sample_id INTEGER NOT NULL,
+    FOREIGN KEY (sample) REFERENCES Samples(sample_id)
+);""",
+]
+
+
+try:
+    for table in table_creation:
+        cursor.execute(table)
+    print("Tables Created")
+except sqlite3.OperationalError as error:
+    print(error)
+
+
+# Clean tables
+connection.execute("DELETE FROM Summary;")
+
+summary_df = df_new.drop_duplicates()
+samples_db = pd.read_sql("SELECT * FROM Samples", connection)  # get foreign key
+samples_table = samples_db[['sample', 'sample_id']].drop_duplicates()
+summary_merged = summary_df.merge(samples_table, on=["sample"])  # merge
+
+summary_merged.to_sql("Summary", connection, if_exists="append", index=False)
+connection.commit()
