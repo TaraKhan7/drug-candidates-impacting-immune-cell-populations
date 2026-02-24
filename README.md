@@ -10,5 +10,5 @@ NOTE: Each analysis file can also be run independently by running the follow com
 ```python <file.name>.py```
 
 # 2. Relational Database Schema
-The diagram below is a visual representation of the relational database schema created, with each box representing a table.
+The diagram below is a visual representation of the relational database schema created, with each box representing a table.  <br> 
 <img width="491" height="457" alt="schema_diagram" src="https://github.com/user-attachments/assets/53bab787-80dd-48f4-a0ee-2d5314ec9590" />
