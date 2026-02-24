@@ -15,10 +15,10 @@ The diagram below is a visual representation of the relational database schema c
 
 The 'Projects' table contains information specific to each project which is the project and sample_type. This way a new project can easily be added with its respective sample type.  
 Each project has a number of subjects, so the 'Subjects' table maps back to the 'Projects' table using project_id as a key.  <br> <br> 
-The 'Subjects' table contains all information about each subject that would be recorded at intake: subject, condition, age, sex. This makes it easy to add new Subjects when they are first enrolled.  <br> <br> 
+The 'Subjects' table contains all information about each subject that would be recorded at intake: subject, condition, age, sex. This makes it easy to add new subjects when they are first enrolled.  <br> <br> 
 The 'Treatments' table contains information regarding treatment and response for each patient, mapped back to the subject table by subject_id. Because this information would not be available at intake, creating a separate table allows for streamlined analysis of results once they become available. <br> <br> 
 The 'Samples' table contains information regarding sample, time_from_treatment_start, and all of the cell values. It is mapped back to the 'Subjects' table using subject_id as a key. This was done because each patient has three samples, allowing for easy mapping from patient to sample, while separating information that remains consistent for each patient. <br> <br> 
-Overall, this database structure allows for ease of analysis even with many more projects, subjects, and samples included. It separates the datas into tables based on considerations like availability of information at a certain time, as well as additional subjects, samples, or projects being added.
+Overall, this database structure allows for ease of analysis even with many more projects, subjects, and samples included. It separates the data into tables based on considerations like availability of information at a certain time, as well as additional subjects, samples, or projects being added.
 
 # 3.  Code Structure
 Each of the files, with the exception of the raw dataset, is located in the root directory due to instructions and for ease of access. This project has a smaller number of files, however, if there were more files, additional directories should be created for organization.  <br><br>
