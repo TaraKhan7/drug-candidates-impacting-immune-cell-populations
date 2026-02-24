@@ -1,4 +1,5 @@
 import sqlite3
+import pandas as pd
 
 
 def load_data():
@@ -42,7 +43,6 @@ def load_data():
     );""",
     ]
 
-
     try:
         for table in table_creation:
             cursor.execute(table)
@@ -50,18 +50,8 @@ def load_data():
     except sqlite3.OperationalError as error:
         print(error)
 
-
     # Data insertion
-
-    import pandas as pd
-
     df = pd.read_csv("datasets/cell-count.csv")
-    # print(df.head())
-
-    # used for dataset exploration
-    # unique = df['time_from_treatment_start'].unique()
-    # print(unique)
-
 
     # Clean all tables
     connection.execute("DELETE FROM Subjects;")
@@ -70,10 +60,9 @@ def load_data():
     connection.execute("DELETE FROM Samples;")
     connection.commit()
 
+    connection.execute("PRAGMA foreign_keys = ON")  # prevents invalid foreign keys
 
-    connection.execute("PRAGMA foreign_keys = ON")
-
-    # Create table for each Projects
+    # Create table for Projects
     projects_df = df[["project", "sample_type"]].drop_duplicates()
     # Insert to database
     projects_df.to_sql("Projects", connection, if_exists="append", index=False)
@@ -84,7 +73,9 @@ def load_data():
         ["subject", "condition", "age", "sex", "project", "sample_type"]
     ].drop_duplicates()
     projects_db = pd.read_sql("SELECT * FROM Projects", connection)  # get foreign key
-    subjects_merged = subjects_df.merge(projects_db, on=["project", "sample_type"])  # merge
+    subjects_merged = subjects_df.merge(
+        projects_db, on=["project", "sample_type"]
+    )  # merge
     subjects_final_df = subjects_merged[
         ["subject", "condition", "age", "sex", "project_id"]
     ]
@@ -98,7 +89,9 @@ def load_data():
     treatments_merged = treatments_df.merge(subjects_db, on=["subject"])  # merge
     treatments_final_df = treatments_merged[["treatment", "response", "subject_id"]]
     # Insert to database
-    treatments_final_df.to_sql("Treatments", connection, if_exists="append", index=False)
+    treatments_final_df.to_sql(
+        "Treatments", connection, if_exists="append", index=False
+    )
     connection.commit()
 
     # Create table for Samples
@@ -130,5 +123,7 @@ def load_data():
     # Insert to database
     samples_final_df.to_sql("Samples", connection, if_exists="append", index=False)
     connection.commit()
+
+
 if __name__ == "__main__":
     load_data()

@@ -13,10 +13,12 @@ join = pd.read_sql(
     WHERE s.condition = 'melanoma' AND s.sex = 'M' AND t.response = 'yes' AND m.time_from_treatment_start = 0
     """,
     connection,
-    )
+)
 print(join)
 
-average = join['b_cell'].mean()
-#print(average)
+average = join["b_cell"].mean()
 rounded = round(average, 2)
-print('For Melanoma males, the average number of B cells for responders at time=0 is:', rounded)
+print(
+    "For Melanoma males, the average number of B cells for responders at time=0 is:",
+    rounded,
+)

@@ -2,6 +2,7 @@
 import sqlite3
 import pandas as pd
 
+
 def initial_analysis():
     connection = sqlite3.connect("cell-count.db")
 
@@ -13,7 +14,11 @@ def initial_analysis():
 
     # Calcuate totals for each row
     df["total_count"] = (
-        df["b_cell"] + df["cd8_t_cell"] + df["cd4_t_cell"] + df["nk_cell"] + df["monocyte"]
+        df["b_cell"]
+        + df["cd8_t_cell"]
+        + df["cd4_t_cell"]
+        + df["nk_cell"]
+        + df["monocyte"]
     )
 
     # Calculate percentage for each row
@@ -21,7 +26,6 @@ def initial_analysis():
 
     for column in cell_type:
         df[column + " percentage"] = (df[column] / df["total_count"]) * 100
-
 
     df_new = pd.DataFrame(
         columns=["sample", "total_count", "population", "count", "percentage"]
@@ -71,25 +75,18 @@ def initial_analysis():
 
         df_new = pd.concat([df_new, df_add], ignore_index=True)
 
-
-
     # Display summary results table
 
     # Uncomment below to view entire table
-    # pd.set_option('display.max_rows', None) 
-    # pd.set_option('display.max_columns', None) 
-
+    # pd.set_option('display.max_rows', None)
+    # pd.set_option('display.max_columns', None)
 
     print("Summary Results Table:")
     print(df_new)
 
-
     # Add results to database
     connection = sqlite3.connect("cell-count.db")
     cursor = connection.cursor()
-
-
-
 
     table_creation = [
         """CREATE TABLE IF NOT EXISTS Summary (
@@ -104,7 +101,6 @@ def initial_analysis():
     );""",
     ]
 
-
     try:
         for table in table_creation:
             cursor.execute(table)
@@ -112,17 +108,18 @@ def initial_analysis():
     except sqlite3.OperationalError as error:
         print(error)
 
-
     # Clean tables
     connection.execute("DELETE FROM Summary;")
 
+    # Insert data into database
     summary_df = df_new.drop_duplicates()
     samples_db = pd.read_sql("SELECT * FROM Samples", connection)  # get foreign key
-    samples_table = samples_db[['sample', 'sample_id']].drop_duplicates()
+    samples_table = samples_db[["sample", "sample_id"]].drop_duplicates()
     summary_merged = summary_df.merge(samples_table, on=["sample"])  # merge
 
     summary_merged.to_sql("Summary", connection, if_exists="append", index=False)
     connection.commit()
+
 
 if __name__ == "__main__":
     initial_analysis()
