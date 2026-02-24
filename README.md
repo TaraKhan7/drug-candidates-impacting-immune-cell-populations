@@ -28,4 +28,5 @@ app.py functions as the 'main' file in this repository, where it calls and runs 
 additional_analysis.py is not called anywhere, and was created to answer a specific question outside of the dashboard.
 
 # 4. Dashboard Link
-This is the link to the results dashboard: https://drug-candidates-impacting-immune-cell-populations-ffdjs48vvkam.streamlit.app/
+This is the link to the results dashboard: https://drug-candidates-impacting-immune-cell-populations-ffdjs48vvkam.streamlit.app/ <br>
+Please note that the dashboard takes about 15 seconds to fully load.
