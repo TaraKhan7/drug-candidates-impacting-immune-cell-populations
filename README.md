@@ -26,3 +26,6 @@ Each file (load_data.py, initial_analysis.py, statistical_analysis.py, and subse
 app.py functions as the 'main' file in this repository, where it calls and runs each function (or file essentially), then creates a dashboard to display results. This was done so the user wouls only have to run one file to complete all the steps from database creation to display of dashboard. <br> <br> 
 
 additional_analysis.py is not called anywhere, and was created to answer a specific question outside of the dashboard.
+
+# 4. Dashboard Link
+This is the link to the results dashboard: [insert link]
