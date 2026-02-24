@@ -38,7 +38,7 @@ st.image(["boxplot_yes.png","boxplot_no.png"], width="content")
 
 st.subheader("T-test Comparison Results")
 st.dataframe(results)
-st.text("Cd8 t-cells have a significant difference in relative frequencies between responders and non-responders as indicated by a independent-samples" \
+st.text("Cd4 t-cells have a significant difference in relative frequencies between responders and non-responders as indicated by a independent-samples" \
 " t-test. There was a statistically significant difference between responders (yes) and non-responders (no) where t(1966)=2.0894 and p=0.005.")
 st.text("The other four cell types had no significant difference in relative frequencies between responders and non-responders.")
 
