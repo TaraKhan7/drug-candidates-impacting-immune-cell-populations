@@ -21,9 +21,9 @@ The 'Samples' table contains information regarding sample, time_from_treatment_s
 Overall, this database structure allows for ease of analysis even with many more projects, subjects, and samples included. It separates the datas into tables based on considerations like availability of information at a certain time, as well as additional subjects, samples, or projects being added.
 
 # 3.  Code Structure
-Each of the files, with the exception of the raw dataset, is located in the root directory due to instructions and for ease of access. This project has a smaller number of files, however, if there were more files, additional directories should be created for organization.  <br> <br>  
+Each of the files, with the exception of the raw dataset, is located in the root directory due to instructions and for ease of access. This project has a smaller number of files, however, if there were more files, additional directories should be created for organization.  <br>
 Each file (load_data.py, initial_analysis.py, statistical_analysis.py, and subset_analysis.py) contains all the code needed to solve that part of the problem. Each file's entire contents is also wrapped in a function so it can easily be called in app.py.  <br> <br> 
-app.py functions as the 'main' file in this repository, where it calls and runs each function (or file essentially), then creates a dashboard to display results. This was done so the user wouls only have to run one file to complete all the steps from database creation to display of dashboard. <br> <br> 
+app.py functions as the 'main' file in this repository, where it calls and runs each function (or file essentially), then creates a dashboard to display results. This was done so the user would only have to run one file to complete all the steps from database creation to display of dashboard. <br> <br> 
 
 additional_analysis.py is not called anywhere, and was created to answer a specific question outside of the dashboard.
 
